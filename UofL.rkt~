@@ -1,5 +1,4 @@
 #lang scheme
-(define stack '((a b)))
 
 (define (eval expr)
   (let ([e (string-split expr)])
@@ -10,14 +9,9 @@
       (("#clear") (clear-variables))
       (else (eval-basic-expr e)))))
 
-(define (define-variable e)
-   (set! stack (append stack (list (list (cadr e) (caddr e)))))
-)
-
-(define (define-function e) stack)
-
+(define (define-variable e) "DEFINE A FUCKING VARIABLE")
+(define (define-function e) "DEFINE A FUCKING FUNCTION")
 (define (clear-variables) "CLEAR THE FUCKING VARIABLES")
-
 (define (eval-basic-expr e)
   (let ([l (string->number (first e))]
         [o (second e)]
