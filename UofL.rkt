@@ -1,4 +1,6 @@
 #lang scheme
+(require "tokenizer.rkt")
+
 (define stack '((a b)))
 
 (define (eval expr)
@@ -40,6 +42,6 @@
 (define (UofL)
   (display "UofL>")
   (let ((expr (read-line)))
-    (write (eval expr))
+    (write (eval (tokenize expr)))
     (newline)
     (UofL)))
