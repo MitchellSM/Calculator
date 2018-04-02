@@ -1,6 +1,4 @@
 #lang racket
-(provide evalPostFix)
-
 ; takes a list of numbers, operators in post fix notation
 (define (evalPostFix expr)
   (do ((remaining expr (cdr remaining))
