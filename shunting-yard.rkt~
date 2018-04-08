@@ -1,6 +1,14 @@
 #lang racket
 (provide (all-defined-out))
 
+
+; Checks if a given symbol is an operator
+; symbol = A token
+(define (operator? symbol)
+  (member symbol '(#\+ #\- #\* #\/ #\% #\^ #\! #\= #\< #\>))
+)
+
+
 ; Determines the associativity of a given operator
 ; operator = An operator
 (define (associativity-of operator)
