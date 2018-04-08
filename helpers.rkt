@@ -19,3 +19,6 @@
     (("#definefunc") #t)
     (("#clear") #t)
     (else #f)))
+
+(define (variable? symbol)
+  (member symbol '(a)))

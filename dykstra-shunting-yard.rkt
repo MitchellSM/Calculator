@@ -16,9 +16,9 @@
 ;;;13. While there are operators on the stack, pop them to the queue
 
 
-(define (dykstra-yard expr stack)
-  (cond ((number? (car expr) (cons (car expr) (dykstra-yard (cdr expr) stack)))
-         ((operator? (car expr)) (handle-operator expr stack))
-         ((case (car expr)
-            [#\( (dykstra-yard (cdr expr) (cons (car expr) stack))]
-            [#\) (dykstra-yard 
+;(define (dykstra-yard expr stack)
+;  (cond ((number? (car expr) (cons (car expr) (dykstra-yard (cdr expr) stack)))
+;         ((operator? (car expr)) (handle-operator expr stack))
+;         ((case (car expr)
+;            [#\( (dykstra-yard (cdr expr) (cons (car expr) stack))]
+;            [#\) (1)])))))

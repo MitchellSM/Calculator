@@ -1,13 +1,12 @@
 #lang racket
 (require "helpers.rkt")
 (require "variables.rkt")
-;;(require "commandprocessor.rkt")
 (provide tokenize)
 
 (define (tokenize expr)
   (if (not (command? expr))
       (%tokenize (string->list expr))
-      (process-command expr))
+      (process-command expr)))
 
 (define (%tokenize parts)
     (cond ((null? parts)
@@ -29,5 +28,4 @@
         (else '())))
 
 (define (process-command expr)
-  "This function is used to process the commands"
-  )
+  "This function is used to process the commands")
