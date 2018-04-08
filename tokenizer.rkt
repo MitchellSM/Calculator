@@ -1,8 +1,6 @@
 #lang racket
 (require "helpers.rkt")
 (require "variables.rkt")
-(require "shunting-yard.rkt")
-(require "postfix-evaluator.rkt")
 (provide tokenize)
 
 (define (tokenize expr)

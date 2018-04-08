@@ -1,7 +1,9 @@
 #lang racket
 (require "helpers.rkt")
 (require "tokenizer.rkt")
-(provide handle)
+(require "shunting-yard.rkt")
+(require "postfix-evaluator.rkt")
+(provide parse)
 
 ;;; This function parses input
 ;;; and kicks off handling.
@@ -11,18 +13,22 @@
   (let ([tokens (tokenize expr)])
     (handle tokens)))
 
+;;; This function handles the tokens
+;;; from the tokenizer.
+;;;
+;;; Input: list of tokens.
 (define (handle tokens)
-  (let ([f (first (tokens)])
+  (let ([f (first tokens)])
     (case f
-      [("#definevari") (handlecommand expr)]
-      [("#definefunc") (handlecommand expr)]
-      [("#exit") (handlecommand expr)]
-      [("#clear") (handlecommand expr)]
-      [("input") (handleinput expr)]
-      [("output") (handleoutput expr)]
-      [("if") (handleselection expr)]
-      [("for") (handleiterative expr)]
-      [else expr])))
+      [("#definevari") (handlecommand tokens)]
+      [("#definefunc") (handlecommand tokens)]
+      [("#exit") (handlecommand tokens)]
+      [("#clear") (handlecommand tokens)]
+      [("input") (handleinput tokens)]
+      [("output") (handleoutput tokens)]
+      [("if") (handleselection tokens)]
+      [("for") (handleiterative tokens)]
+      [else (evalPostFix(shunting-yard tokens))])))
 
 (define (handlecommand expr) "got command")
 (define (handleinput expr) "got input")
