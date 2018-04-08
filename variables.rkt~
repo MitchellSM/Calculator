@@ -38,16 +38,6 @@
     )
 )
 
-; Returns #t or #f when looking for a variable in the stack.
-; input = mlist (variables)
-; name = string
-(define (checkVarExists input name)
-  (if (null? input)
-      #f
-      (if (equal? (mcar (mcar input)) name)
-          #t
-          (checkVarExists (mcdr input) name))))
-      
 
 ; Sets the value of a variable
 ; input = mlist (variables)
