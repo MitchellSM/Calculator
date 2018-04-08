@@ -1,4 +1,5 @@
 #lang racket
+(require "helpers.rkt")
 (provide (all-defined-out))
 
 ; Determines the associativity of a given operator
@@ -9,7 +10,6 @@
       'right
   )
 )
-
 
 ; Determines the precedence of a given operator
 ; operator = An operator
