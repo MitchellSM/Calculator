@@ -1,5 +1,5 @@
 #lang racket
-(require "parser.rkt")
+(require "tokenizer.rkt")
 
 ;; input multi line mode.
 (define multimode #f)
@@ -21,7 +21,7 @@
     ((togglemode expr)
      (if multimode
          (%UofL (string-append command (string-append expr "\r")))
-         ((write (handle (string-append command expr)))
+         ((write (tokenize (string-append command expr)))
          (newline)
          (%UofL ""))))))
 
