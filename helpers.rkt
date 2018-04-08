@@ -2,6 +2,7 @@
 (provide operator?)
 (provide bracket?)
 (provide command?)
+(provide variable?)
 
 ;;; function which returns #f if symbol is an operator.
 (define (operator? symbol)
