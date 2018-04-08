@@ -1,5 +1,6 @@
 #lang racket
 (require compatibility/mlist)
+(provide checkVarExists)
 (provide variables)
 (provide defineVar)
 (provide getVarValue)

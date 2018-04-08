@@ -1,5 +1,6 @@
 #lang racket
 (require "helpers.rkt")
+(require "variables.rkt")
 (provide tokenize)
 
 (define (tokenize expr)
@@ -10,7 +11,7 @@
       [(io? (first parts)) (%tokenize-io parts)]
       [(selection? (first parts)) (%tokenize-selection parts)]
       [(iterative? (first parts)) (%tokenize-iterative parts)]
-      [else (%tokenize parts)])))
+      [else (%tokenize (string->list expr))])))
 
 (define (%tokenize-command parts) "tokenize command")
 (define (%tokenize-io parts) "tokenize io")
