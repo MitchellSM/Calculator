@@ -7,13 +7,22 @@
   (let ((parts (string-split expr)))
     (cond
       [(null? parts) '()]
-      [(command? (first parts)) (%tokenize-command parts)]
+      [(command? (first parts)) (%tokenize-command expr)]
       [(io? (first parts)) (%tokenize-io parts)]
       [(selection? (first parts)) (%tokenize-selection parts)]
       [(iterative? (first parts)) (%tokenize-iterative parts)]
       [else (%tokenize (string->list expr))])))
 
-(define (%tokenize-command parts) "tokenize command")
+(define (%tokenize-command expr)
+  (let ((command (first (string-split expr))))
+    (case command
+      (("#definefunc") (%tokenize-definefunc expr))
+      (else "dud"))))
+
+(define (%tokenize-definefunc expr)
+  (let ((lines (string-split expr "\r")))
+    (append '() (map (lambda (line) (string-split line)) lines))))
+
 (define (%tokenize-io parts) "tokenize io")
 (define (%tokenize-selection parts) "tokenize seletion")
 (define (%tokenize-iterative parts) "tokenize iterative")
@@ -34,6 +43,8 @@
   (cond ((null? eqn)
          '())
         ((char-numeric? (car eqn))
+         (cons (car eqn) (parse-number (cdr eqn))))
+        ((eq? (car eqn) #\.)
          (cons (car eqn) (parse-number (cdr eqn))))
         (else '())))
 
