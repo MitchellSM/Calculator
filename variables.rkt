@@ -1,9 +1,15 @@
 #lang racket
 (require compatibility/mlist)
+(provide checkVarExists)
+(provide variables)
+(provide defineVar)
+(provide getVarValue)
+(provide setVarValue)
+(provide clearVariables)
 
 
 ; List of user-defined variables. Format is (string, string, integer) => (name, type, value)
-(define variables (mlist (mlist "a" "integer" 3) (mlist "b" "integer" 4)))
+(define variables (mlist (mlist "I" "integer" 22) (mlist "J" "integer" 0)))
 
 
 ; Defines a new variable in the variables list
@@ -38,6 +44,16 @@
     )
 )
 
+; Returns #t or #f when looking for a variable in the stack.
+; input = mlist (variables)
+; name = string
+(define (checkVarExists input name)
+  (if (null? input)
+      #f
+      (if (equal? (mcar (mcar input)) name)
+          #t
+          (checkVarExists (mcdr input) name))))
+      
 
 ; Sets the value of a variable
 ; input = mlist (variables)
@@ -54,11 +70,17 @@
             (if (equal? (mcar (mcar input)) name)
                 
                 ; We found the variable, set its value
-                (set-mcar!  (mcdr (mcdr (mcar input))) value)
+                (set-mcar! (mcdr (mcdr (mcar input))) value)
                 
                 ; Haven't found the variable, keep looking
                 (setVarValue (mcdr input) name value)
             )
         )
     )
+)
+
+
+; Clears all variables
+(define (clearVariables)
+  (set! variables (mlist (mlist "I" "integer" 0) (mlist "J" "integer" 0)))
 )

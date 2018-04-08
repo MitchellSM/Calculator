@@ -4,16 +4,26 @@
 (provide tokenize)
 
 (define (tokenize expr)
-  (if (not (command? expr))
-      (%tokenize (string->list expr))
-      (process-command expr)))
+  (let ((parts (string-split expr)))
+    (cond
+      [(null? parts) '()]
+      [(command? (first parts)) (%tokenize-command parts)]
+      [(io? (first parts)) (%tokenize-io parts)]
+      [(selection? (first parts)) (%tokenize-selection parts)]
+      [(iterative? (first parts)) (%tokenize-iterative parts)]
+      [else (%tokenize (string->list expr))])))
+
+(define (%tokenize-command parts) "tokenize command")
+(define (%tokenize-io parts) "tokenize io")
+(define (%tokenize-selection parts) "tokenize seletion")
+(define (%tokenize-iterative parts) "tokenize iterative")
 
 (define (%tokenize parts)
-    (cond ((null? parts)
-           '())
+    (cond ((null? parts) '())
           ((or (operator? (car parts))
                (bracket? (car parts)))
-           (cons (car parts) (%tokenize (cdr parts))))
+           (cons (car parts)
+                 (%tokenize (cdr parts))))
           ((char-numeric? (car parts))
            (cons (string->number (list->string (parse-number parts)))
                  (%tokenize (list-tail parts (length (parse-number parts))))))
@@ -27,5 +37,3 @@
          (cons (car eqn) (parse-number (cdr eqn))))
         (else '())))
 
-(define (process-command expr)
-  "This function is used to process the commands")
