@@ -1,13 +1,6 @@
 #lang racket
+(require "helpers.rkt")
 (provide (all-defined-out))
-
-
-; Checks if a given symbol is an operator
-; symbol = A token
-(define (operator? symbol)
-  (member symbol '(#\+ #\- #\* #\/ #\% #\^ #\! #\= #\< #\>))
-)
-
 
 ; Determines the associativity of a given operator
 ; operator = An operator
@@ -17,7 +10,6 @@
       'right
   )
 )
-
 
 ; Determines the precedence of a given operator
 ; operator = An operator

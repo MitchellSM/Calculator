@@ -10,7 +10,7 @@
     ((null? remaining) (car resultList))))
 
 
-(define (eval opp r l)
+(define (eval opp l r)
   (case opp
     [(#\+) (+ l r)]
     [(#\-) (- l r)]

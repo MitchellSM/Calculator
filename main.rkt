@@ -21,7 +21,7 @@
     ((togglemode expr)
      (if multimode
          (%UofL (string-append command (string-append expr "\r")))
-         ((write (handle (string-append command expr)))
+         ((write (parse (string-append command expr)))
          (newline)
          (%UofL ""))))))
 
