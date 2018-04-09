@@ -24,9 +24,10 @@
     ; special handling for functions.
     (if (pair? f) (handle-define-function tokens)
         (case f
-          [("#definevari") (handle-define-vari tokens)]
-          [("#exit") (handle-exit tokens)]
-          [("#clear") (handle-clear tokens)]
+          [("#definevari") (handlecommand tokens)]
+          [("#definefunc") (handlecommand tokens)]
+          [("#exit") (handlecommand tokens)]
+          [("#clear") (handlecommand tokens)]
           [("input") (handle-io-input tokens)]
           [("output") (handle-io-output tokens)]
           [("if") (handleselection tokens)]
