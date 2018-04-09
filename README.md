@@ -14,3 +14,8 @@ parser will evaluate the information and attempt to determine what to do.
 #### tokenizer.rkt
 The tokenizer is responsible for breaking the string input down into the bare minimum 
 lexemes for evaluation.
+
+#### functions.rkt
+Information passed from the parser is taken as input. Given the command "#definefunc", a 
+new activation record for the user-defined function will be created and pushed onto the stack. 
+
