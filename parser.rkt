@@ -4,6 +4,7 @@
 (require "shunting-yard.rkt")
 (require "postfix-evaluator.rkt")
 (require "command.rkt")
+(require "functions.rkt")
 (require "io.rkt")
 (provide parse)
 
@@ -31,6 +32,7 @@
           [("output") (handle-io-output tokens)]
           [("if") (handleselection tokens)]
           [("for") (handleiterative tokens)]
+          [("main") (handle-main)]
           [else (evalPostFix(shunting-yard tokens))]))))
 
 (define (handlecommand expr) expr)

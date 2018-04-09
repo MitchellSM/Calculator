@@ -16,6 +16,7 @@
     (("#definevari") #t)
     (("#definefunc") #t)
     (("#clear") #t)
+    (("main") #t)
     (else #f)))
 
 ;;; This function returns #t if symbol is an io operator.
