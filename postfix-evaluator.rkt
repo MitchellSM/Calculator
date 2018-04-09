@@ -4,7 +4,7 @@
 ; takes a list of numbers, operators in post fix notation
 (define (evalPostFix expr)
   (do ((remaining expr (cdr remaining))
-       (resultList '() (if (char? (car remaining))
+       (resultList '(0) (if (char? (car remaining))
                             (cons (eval (car remaining) (car resultList) (cadr resultList)) (cddr resultList))
                             (cons (car remaining) resultList))))
     ((null? remaining) (car resultList))))
@@ -16,7 +16,7 @@
     [(#\-) (- l r)]
     [(#\/) (/ l r)]
     [(#\*) (* l r)]
-    [(#\!) (factorial l)]))
+    [(#\!) (factorial r)]))
 
 (define (factorial n)
   (if (= n 0) 1 (* n (factorial (- n 1)))))
