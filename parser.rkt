@@ -4,6 +4,7 @@
 (require "shunting-yard.rkt")
 (require "postfix-evaluator.rkt")
 (require "command.rkt")
+(require "io.rkt")
 (provide parse)
 
 ;;; This function parses input
@@ -20,20 +21,19 @@
 ;;; Input: list of tokens.
 (define (handle tokens)
   (let ([f (first tokens)])
+    ; special handling for functions.
     (if (pair? f) (handle-define-function tokens)
         (case f
           [("#definevari") (handlecommand tokens)]
           [("#definefunc") (handlecommand tokens)]
           [("#exit") (handlecommand tokens)]
           [("#clear") (handlecommand tokens)]
-          [("input") (handleinput tokens)]
-          [("output") (handleoutput tokens)]
+          [("input") (handle-io-input tokens)]
+          [("output") (handle-io-output tokens)]
           [("if") (handleselection tokens)]
           [("for") (handleiterative tokens)]
           [else (evalPostFix(shunting-yard tokens))]))))
 
 (define (handlecommand expr) expr)
-(define (handleinput expr) "got input")
-(define (handleoutput expr) "got output")
 (define (handleselection expr) "got selection")
 (define (handleiterative expr) "got iterative")

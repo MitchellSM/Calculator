@@ -8,7 +8,7 @@
     (cond
       [(null? parts) '()]
       [(command? (first parts)) (%tokenize-command expr)]
-      [(io? (first parts)) (%tokenize-io parts)]
+      [(io? (first parts)) parts]
       [(selection? (first parts)) (%tokenize-selection parts)]
       [(iterative? (first parts)) (%tokenize-iterative parts)]
       [else (%tokenize (string->list expr))])))
@@ -17,13 +17,12 @@
   (let ((command (first (string-split expr))))
     (case command
       (("#definefunc") (%tokenize-definefunc expr))
-      (else "dud"))))
+      (else (string-split expr)))))
 
 (define (%tokenize-definefunc expr)
   (let ((lines (string-split expr "\r")))
     (append '() (map (lambda (line) (string-split line)) lines))))
 
-(define (%tokenize-io parts) "tokenize io")
 (define (%tokenize-selection parts) "tokenize seletion")
 (define (%tokenize-iterative parts) "tokenize iterative")
 

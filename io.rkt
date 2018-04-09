@@ -1,14 +1,13 @@
 #lang racket
-<<<<<<< HEAD
+(provide handle-io-output)
+(provide handle-io-input)
 (require "variables.rkt")
+
 ;;;Input and Output Handling
 
-(define output
-  (lambda (var)
-    (printf "~a" getVarValue(variables var))))
 
-(define input
-  (lambda (var)
-    "Do something here"))
-=======
->>>>>>> 3f83dd9a45137bbd3e99343e27f55d9a30279603
+; receives '("output" "a")
+(define (handle-io-output expr) "handle-io-output needs to be rewritten")
+
+; receives '("input" "a")
+(define (handle-io-input expr) "handle-io-input needs to be rewritten")

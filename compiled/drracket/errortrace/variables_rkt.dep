@@ -1,5 +1,1 @@
-<<<<<<< HEAD
-("6.12" ("1b086a59df893459ab44b8f4d0c13fad598f9c4c" . "c8b552b97ca4d595bce9a8ff236edb9a97542ddc") (collects #"compatibility" #"mlist.rkt") (collects #"errortrace" #"errortrace-key.rkt") (collects #"racket" #"main.rkt") (collects #"racket" #"runtime-config.rkt"))
-=======
 ("6.12" ("4ea62da4a3d1470f893191da4d83ee3821ba0b79" . "c8b552b97ca4d595bce9a8ff236edb9a97542ddc") (collects #"compatibility" #"mlist.rkt") (collects #"errortrace" #"errortrace-key.rkt") (collects #"racket" #"main.rkt") (collects #"racket" #"runtime-config.rkt"))
->>>>>>> 3f83dd9a45137bbd3e99343e27f55d9a30279603
