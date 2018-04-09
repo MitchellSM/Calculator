@@ -4,7 +4,7 @@
 (require "helpers.rkt")
 (provide handle-main)
 
-(define (handle-main) "IN MAIN")
+(define (handle-main tokens) "IN MAIN")
 
 (define functions (mlist (mlist "myfunc" '("a" "b") '("a" #\= "b" #\+ #\2)) (mlist "myfunc2" '("c" "d") '("c" #\= "d" #\* #\3))))
 
