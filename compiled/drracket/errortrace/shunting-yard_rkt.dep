@@ -1,1 +1,1 @@
-("6.12" ("7f0153db6b809f315fbec0da9569861cc1d99c96" . "6bf8aa5764e0706cfb6b1718dca5d293e9f8522d") #"/Users/brad/code/uofl-scheme-calculator/helpers.rkt" (collects #"errortrace" #"errortrace-key.rkt") (collects #"racket" #"main.rkt") (collects #"racket" #"runtime-config.rkt"))
+("6.12" ("7f0153db6b809f315fbec0da9569861cc1d99c96" . "ccd6380009b58e989e6df469191535666bf30ee7") #"/Users/brad/code/uofl-scheme-calculator/helpers.rkt" (collects #"errortrace" #"errortrace-key.rkt") (collects #"racket" #"main.rkt") (collects #"racket" #"runtime-config.rkt"))

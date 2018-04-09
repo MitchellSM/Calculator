@@ -3,7 +3,7 @@
       
 ;;; function which returns #f if symbol is an operator.
 (define (operator? symbol)
-  (member symbol '(#\+ #\- #\* #\/ #\^)))
+  (member symbol '(#\+ #\- #\* #\/ #\^ #\!)))
 
 ;;; function which returns #f if symbol is a bracket.
 (define (bracket? symbol)

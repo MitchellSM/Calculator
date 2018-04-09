@@ -15,6 +15,10 @@
     [(#\+) (+ l r)]
     [(#\-) (- l r)]
     [(#\/) (/ l r)]
-    [(#\*) (* l r)]))
+    [(#\*) (* l r)]
+    [(#\!) (factorial l)]))
+
+(define (factorial n)
+  (if (= n 0) 1 (* n (factorial (- n 1)))))
 
 ;(evalPostFix '(15 7 1 1 #\+ #\- #\/ 3 #\* 2 1 1 #\+ #\+ #\-)) ; Test = 5
