@@ -1,17 +1,18 @@
 #lang racket
+(require "parser.rkt")
 (provide evalBoolean)
 
-
-; Takes a list of format '(number conditional number) e.g. '(2 "<" 4)
-; Conditionals are strings
+; evaluates a boolean expresion of the form '("10 + 1" ">" "100 - 99")
+; returns true or false
 (define (evalBoolean expr)
-  (case (cadr expr)
-    [("==") (eq? (car expr) (car (cddr expr)))]
-    [("<>") (not (eq? (car expr) (car (cddr expr))))]
-    [(">=") (>= (car expr) (car (cddr expr)))]
-    [("<=") (<= (car expr) (car (cddr expr)))]
-    [(">") (> (car expr) (car (cddr expr)))]
-    [("<") (< (car expr) (car (cddr expr)))]))
+  (%evalBoolean (parse (car expr)) (cadr expr) (parse (caddr expr)))) 
 
-
+(define (%evalBoolean l opp r)
+  (case opp
+    [("==") (eq? l r)]
+    [("<>") (not (eq? l r))]
+    [(">=") (>= l r)]
+    [("<=") (<= l r)]
+    [(">") (> l r)]
+    [("<") (< l r)]))
 
