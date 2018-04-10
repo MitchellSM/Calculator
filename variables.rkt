@@ -19,7 +19,7 @@
 ; type = string
 ; value = integer/float/bool
 (define (defineVar name type value)
-  (mappend! variables (mlist (mlist name type value)));
+  (mappend! variables (mlist (mlist (car (string->list name)) type value)));
 )
 
 
