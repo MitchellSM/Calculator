@@ -3,6 +3,7 @@
 (require "tokenizer.rkt")
 (require "shunting-yard.rkt")
 (require "postfix-evaluator.rkt")
+(require "boolean-evaluator.rkt")
 (require "command.rkt")
 (require "functions.rkt")
 (require "io.rkt")
@@ -13,9 +14,10 @@
 ;;;
 ;;; Input: string expression.
 (define (parse expr)
-  (let ([tokens (tokenize expr)])
-    (handle tokens)))
-
+  (cond ((booleaneval? expr) (handle-boolean-eval (tokenize expr)))
+        (else (let ([tokens (tokenize expr)])
+         (handle tokens)))))
+  
 ;;; This function handles the tokens
 ;;; from the tokenizer.
 ;;;
@@ -41,6 +43,19 @@
           [("main") (handle-main)]
           ; tokens = list of single characters representing equation
           [else (evalPostFix(shunting-yard tokens))]))))
+
+; gets ("expr" "operator" "expr")
+(define (handle-boolean-eval expr)
+  (let ([l (parse (first expr))]
+        [o (second expr)]
+        [r (parse (third expr))])
+    (case o
+      (("==") (equal? l r))
+      (("<>") (not (equal? l r)))
+      ((">=") (>= l r))
+      (("<=") (<= l r))
+      ((">") (> l r))
+      (("<") (< l r)))))
 
 (define (handleselection expr) "got selection")
 (define (handleiterative expr) "got iterative")

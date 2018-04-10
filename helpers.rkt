@@ -26,6 +26,7 @@
     (("output") #t)
     (else #f)))
 
+;;; This function returns #t if symbol is a selection symbol.
 (define (selection? symbol)
   (case symbol
     (("if") #t)
@@ -34,6 +35,7 @@
     (("endif") #t)
     (else #f)))
 
+;;; This function return #t is symbol is an iterative symbol.
 (define (iterative? symbol)
   (case symbol
     (("for") #t)
@@ -41,6 +43,10 @@
     (("stepsize") #t)
     (("endfor") #t)
     (else #f)))
+
+;;; This function returns #t if symbol is a boolean evaluation symbol.
+(define (booleaneval? expr)
+  (regexp-match #rx"==|<>|>=|<=|>|<" expr))
 
 (define (variable? symbol)
   (member symbol '(a)))

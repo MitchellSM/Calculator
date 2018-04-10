@@ -11,6 +11,7 @@
       [(io? (first parts)) parts]
       [(selection? (first parts)) (%tokenize-selection parts)]
       [(iterative? (first parts)) (%tokenize-iterative parts)]
+      [(booleaneval? expr) (%tokenize-boolean-eval expr)]
       [else (%tokenize (string->list expr))])))
 
 (define (%tokenize-command expr)
@@ -23,6 +24,10 @@
   (let ((lines (string-split expr "\r")))
     (append '() (map (lambda (line) (string-split line)) lines))))
 
+(define (%tokenize-boolean-eval parts)
+  (let ((e (string-split parts #rx"==|<>|>=|<=|>|<")))
+    (list (first e) (first (booleaneval? parts)) (second e))))
+    
 (define (%tokenize-selection parts) "tokenize seletion")
 (define (%tokenize-iterative parts) "tokenize iterative")
 
