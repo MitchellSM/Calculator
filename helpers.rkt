@@ -47,3 +47,7 @@
 ;;; This function returns #t if symbol is a boolean evaluation symbol.
 (define (booleaneval? expr)
   (regexp-match #rx"==|<>|>=|<=|>|<" expr))
+
+;;; This function returns #t if expression is assignment.
+(define (assignment? expr)
+  (regexp-match #rx"=" expr))

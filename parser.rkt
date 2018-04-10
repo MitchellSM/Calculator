@@ -15,6 +15,7 @@
 ;;; Input: string expression.
 (define (parse expr)
   (cond ((booleaneval? expr) (handle-boolean-eval (tokenize expr)))
+        ((assignment? expr) (handle-assignment (tokenize expr)))
         (else (let ([tokens (tokenize expr)])
          (handle tokens)))))
   
@@ -57,5 +58,9 @@
       ((">") (> l r))
       (("<") (< l r)))))
 
-(define (handleselection expr) "got selection")
-(define (handleiterative expr) "got iterative")
+; gets '("1" "=" "2")
+(define (handle-assignment expr) expr)
+
+(define (handleselection expr) expr)
+
+(define (handleiterative expr) expr)

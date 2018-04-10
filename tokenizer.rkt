@@ -12,6 +12,7 @@
       [(selection? (first parts)) (%tokenize-selection parts)]
       [(iterative? (first parts)) (%tokenize-iterative parts)]
       [(booleaneval? expr) (%tokenize-boolean-eval expr)]
+      [(assignment? expr) (%tokenize-assignment expr)]
       [else (%tokenize (string->list expr))])))
 
 (define (%tokenize-command expr)
@@ -27,6 +28,10 @@
 (define (%tokenize-boolean-eval parts)
   (let ((e (string-split parts #rx"==|<>|>=|<=|>|<")))
     (list (first e) (first (booleaneval? parts)) (second e))))
+
+(define (%tokenize-assignment expr)
+  (let ((e (string-split expr #rx"=")))
+    (list (first e) (first (assignment? expr)) (second e))))
     
 (define (%tokenize-selection parts) "tokenize seletion")
 (define (%tokenize-iterative parts) "tokenize iterative")
