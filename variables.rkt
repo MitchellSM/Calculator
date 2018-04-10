@@ -9,7 +9,7 @@
 
 
 ; List of user-defined variables. Format is (string, string, integer) => (name, type, value)
-(define variables (mlist (mlist "I" "integer" 22) (mlist "J" "integer" 0)))
+(define variables (mlist (mlist #\I "integer" 22) (mlist #\J "integer" 0)))
 
 
 ; Defines a new variable in the variables list
@@ -82,5 +82,5 @@
 
 ; Clears all variables
 (define (clearVariables)
-  (set! variables (mlist (mlist "I" "integer" 0) (mlist "J" "integer" 0)))
+  (set! variables (mlist (mlist #\I "integer" 0) (mlist #\J "integer" 0)))
 )
