@@ -3,10 +3,10 @@
 (require "tokenizer.rkt")
 (require "shunting-yard.rkt")
 (require "postfix-evaluator.rkt")
-(require "boolean-evaluator.rkt")
 (require "command.rkt")
 (require "functions.rkt")
 (require "io.rkt")
+(require "variables.rkt")
 (provide parse)
 
 ;;; This function parses input
@@ -42,7 +42,7 @@
           ; tokens = ("main")
           [("main") (handle-main)]
           ; tokens = list of single characters representing equation
-          [else (evalPostFix(shunting-yard tokens))]))))
+          [else (evalPostFix(shunting-yard (replaceVars tokens)))]))))
 
 ; gets ("expr" "operator" "expr")
 (define (handle-boolean-eval expr)

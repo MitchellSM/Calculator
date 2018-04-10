@@ -47,6 +47,3 @@
 ;;; This function returns #t if symbol is a boolean evaluation symbol.
 (define (booleaneval? expr)
   (regexp-match #rx"==|<>|>=|<=|>|<" expr))
-
-(define (variable? symbol)
-  (member symbol '(a)))

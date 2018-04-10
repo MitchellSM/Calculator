@@ -1,0 +1,1 @@
+("6.12" ("1199fda8aa8cd46bdbf0d1f2b8fdf5ef52f5effe" . "7fefd10bf6a9d9c88b26320337814babb22a5afa") #"/Users/brad/code/uofl-scheme-calculator/variables.rkt" (collects #"errortrace" #"errortrace-key.rkt") (collects #"racket" #"main.rkt") (collects #"racket" #"runtime-config.rkt"))

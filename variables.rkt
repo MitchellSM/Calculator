@@ -6,6 +6,8 @@
 (provide getVarValue)
 (provide setVarValue)
 (provide clearVariables)
+(provide replaceVars)
+(provide replace)
 
 
 ; List of user-defined variables. Format is (string, string, integer) => (name, type, value)
@@ -51,7 +53,7 @@
   (if (null? input)
       #f
       (if (equal? (mcar (mcar input)) name)
-          #t
+          name
           (checkVarExists (mcdr input) name))))
       
 
@@ -79,6 +81,29 @@
     )
 )
 
+; Replaces the variables in a given expression with their literal values
+; expr = A list with mixed types
+; eg) If a=10, b=4 and we get an input of     '(3 #\+ #\a #\* #\b)
+; the return will be    '(3 #\+ 10 #\* 4)
+(define (replaceVars expr)
+  (if (null? expr)
+      '()
+      (cons (replace (car expr)) (replaceVars (cdr expr)))
+  )
+)
+
+(define replace
+  (lambda (n)
+       (if (checkVarExists variables n)
+
+          ; Element is a variable, replace it
+          (getVarValue variables n)
+           
+          ; Element is not a variable, do not change it
+          n
+       )
+   )
+)
 
 ; Clears all variables
 (define (clearVariables)

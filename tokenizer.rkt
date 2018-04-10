@@ -40,7 +40,7 @@
           ((char-numeric? (car parts))
            (cons (string->number (list->string (parse-number parts)))
                  (%tokenize (list-tail parts (length (parse-number parts))))))
-          ((variable? (car parts)))
+          ((checkVarExists variables (car parts)) (cons (car parts) (%tokenize (cdr parts))))
           (else (%tokenize (cdr parts)))))
 
 (define (parse-number eqn)
