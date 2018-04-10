@@ -3,7 +3,7 @@
 (provide (all-defined-out))
 
 ; Determines the associativity of a given operator
-; operator = An operator
+; operator = An operator, represented as a char
 (define (associativity-of operator)
   (if (member operator '(#\+ #\- #\* #\/ #\%))
       'left
@@ -11,8 +11,9 @@
   )
 )
 
+
 ; Determines the precedence of a given operator
-; operator = An operator
+; operator = An operator, represented as a char
 (define (precedence-of operator)
   (case operator
     ((#\= #\< #\>) 1)
@@ -41,10 +42,6 @@
      (- 1)
   )
 )
-
-
-; ???
-;(define digit-char? char-numeric?)
 
 
 ; Actions to take if the token in the stmt is an operator
