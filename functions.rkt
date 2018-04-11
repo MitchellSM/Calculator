@@ -3,19 +3,19 @@
 (require compatibility/mlist)
 (require "helpers.rkt")
 (provide handle-main)
+(provide defineFunc)
+(provide function?)
+(provide execute)
+(provide functions)
 
-(define (handle-main tokens) "IN MAIN")
+(define (handle-main tokens)"Do something here")
 
-(define functions (mlist (mlist "myfunc" '("a" "b") '("a" #\= "b" #\+ #\2)) (mlist "myfunc2" '("c" "d") '("c" #\= "d" #\* #\3))))
+(define functions (mlist (mlist "testFunc1" '("a" "b") '(("a=b+2")("b=a*2"))) (mlist "testFunc2" '("c" "d") '(("c=d*3")("d=c-5")))))
 
-;;; Definition of a function
-;;; name = String -> "myfunc"
-;;; parameter_list = list -> '("var1" ... "varN")
-;;; body_statements = list -> '("stmt1" ... "stmtN")
 (define (defineFunc name args body)
   (mappend! functions (mlist (mlist name args body))))
 
-;;; Gets the arugment list of a specific function
+; Gets the arugment list of a specific function
 (define getArgs
   (lambda (funcs name)
     (if (null? funcs)
@@ -24,7 +24,7 @@
                 (mlist-ref (mcar funcs) 1)
                 (getArgs (mcdr funcs) name)))))
 
-;;; Gets the body of a specific function
+; Gets the body of a specific function
 (define getBody
   (lambda (funcs name)
     (if (null? funcs)
@@ -33,37 +33,48 @@
             (mlist-ref (mcar funcs) 2)
             (getBody (mcdr funcs) name)))))
 
-(define functionParse
-  (lambda (str)
-    (let* ([func (string-split str)]
-           ;remove commands
-           [func (cdr func)] [func (reverse (cdr(reverse func)))]
-           ;Parse out name
-           [name (car func)] [func (cdr func)]
-           
-;;;THESE ARE NOT FINISHED...
-;;;NEED TO PROPERLY PARSE OUT ARGS
-           
-          ;Parse out parameters
-           [args (take func 2)]
-          ;parse out body
-           [body (take-right func 2)])
-      
-        ;build function
-      (defineFunc name args body))))
-  
-;;; TESTS
-;(defineFunc "myfunc3" '(#\e #\f) '(#\e #\= #\f #\* #\3 #\g))
+; Sets the body of a function after variable replacement
+(define setBody
+  (lambda (funcs name body)
+    (if (equal? (mcar (mcar funcs)) name)
+        (set-mcar! (mcdr(mcdr(mcar funcs))) body)
+        (setBody (mcdr funcs) name body))))
+        
 
-;(getArgs functions "myfunc2")
-;(getBody functions "myfunc2")
+; Replaces all values and replaces old body statements
+(define execute
+  (lambda (name para)
+    (let ([body (getBody functions name)]
+          [args (getArgs functions name)])
+        (setBody functions name (exe body para args)))))
 
-;(getArgs functions "myfunc")
-;(getBody functions "myfunc")
+; Chains together each body statement after they have been replaced
+(define exe
+  (lambda (body para args)
+    (if (null? body)
+        '()
+        (cons (replacevars (string->list(caar body)) para args) (exe (cdr body) para args)))))
 
-;(getArgs functions "myfunc3")
-;(getBody functions "myfunc3")
+; Replaces each variable with the given parameter
+(define (replacevars expr para args)
+  (if (null? expr)
+      '()
+        (cons (replace (car expr) para args) (replacevars (cdr expr) para args))))
 
-;(functionParse "#definefunc myfunc4 a b a=b+3 b=2+a #definefunc")
-;(getArgs functions "myfunc4")
-;(getBody functions "myfunc4")
+; Verifies replacement of given variables
+(define replace
+  (lambda (n para args)
+    (if (null? args)
+        n
+        (if (eqv? n (car(string->list (car args))))
+            (car para)
+            (replace n (cdr para) (cdr args))))))
+
+; True if function is defined on stack, false otherwise
+(define function?
+  (lambda (funcs name)
+    (if (null? funcs)
+        #f
+        (if (equal? (mcar (mcar funcs)) name)
+            #t
+            (function? (mcdr funcs) name)))))

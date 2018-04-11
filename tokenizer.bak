@@ -1,7 +1,6 @@
 #lang racket
 (require "helpers.rkt")
 (require "variables.rkt")
-(require "functions.rkt")
 (provide tokenize)
 
 (define (tokenize expr)
@@ -14,7 +13,6 @@
       [(iterative? (first parts)) (%tokenize-iterative expr)]
       [(booleaneval? expr) (%tokenize-boolean-eval expr)]
       [(assignment? expr) (%tokenize-assignment expr)]
-      [(function? functions (first parts)) (%tokenize-function parts)]
       [else (%tokenize (string->list expr))])))
 
 (define (%tokenize-command expr)
@@ -38,13 +36,6 @@
 (define (%tokenize-selection parts) (%tokenize-multiline parts))
 (define (%tokenize-iterative parts) (%tokenize-multiline parts))
 
-(define (%tokenize-function parts)
-  (cond ((null? parts) '())
-        ((function? functions (first parts)) (cons (first parts) (%tokenize-function (cdr parts))))
-        ((char-numeric? (car(string->list(car parts))))
-         (cons (string->number(list->string (list (car(string->list(car parts))))))
-               (%tokenize-function (cdr parts))))))
-
 (define (%tokenize parts)
     (cond ((null? parts) '())
           ((or (operator? (car parts))
@@ -66,4 +57,3 @@
          (cons (car eqn) (parse-number (cdr eqn))))
         (else '())))
 
-(tokenize "testFunc1 1 2")

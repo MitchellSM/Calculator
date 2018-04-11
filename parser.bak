@@ -38,7 +38,6 @@
         (case f
           ; tokens = ("#definevari" "varname" "vartype")
           [("#definevari") (handle-define-vari tokens)]
-          [("#definefunc") (handle-define-function tokens)]
           ; tokens = ("#exit")
           [("#exit") (handle-exit tokens)]
           ; tokens = ("#clear")
@@ -52,7 +51,7 @@
           [("main") (handle-main)]
           ; tokens = list of single characters representing equation
           [else (evalPostFix(shunting-yard (replaceVars tokens)))]))))
-;(if (function? functions (first tokens)) (execute (first tokens) (cdr tokens))
+
 ; gets ("expr" "operator" "expr")
 (define (handle-boolean-eval expr)
   (let ([l (parse (first expr))]
@@ -91,3 +90,4 @@
        (for counter end stepsize body))
       "end"
       ))
+
