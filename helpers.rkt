@@ -44,6 +44,12 @@
     (("endfor") #t)
     (else #f)))
 
+(define (selectioncheck? expr)
+  (regexp-match #rx"if|then|elseif|endif" expr))
+
+(define (iterativecheck? expr)
+  (regexp-match #rx"for|to|stepsize|endfor" expr))
+
 ;;; This function returns #t if symbol is a boolean evaluation symbol.
 (define (booleaneval? expr)
   (regexp-match #rx"==|<>|>=|<=|>|<" expr))

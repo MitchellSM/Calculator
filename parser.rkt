@@ -14,8 +14,12 @@
 ;;;
 ;;; Input: string expression.
 (define (parse expr)
-  (cond ((booleaneval? expr) (handle-boolean-eval (tokenize expr)))
-        ((assignment? expr) (handle-assignment (tokenize expr)))
+  (cond ((and (booleaneval? expr)
+              (not (selectioncheck? expr))
+              (not (iterativecheck? expr))) (handle-boolean-eval (tokenize expr)))
+        ((and (assignment? expr)
+              (not (selectioncheck? expr))
+              (not (iterativecheck? expr))) (handle-assignment (tokenize expr)))
         (else (let ([tokens (tokenize expr)])
          (handle tokens)))))
   

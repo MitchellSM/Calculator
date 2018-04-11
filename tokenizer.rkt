@@ -9,8 +9,8 @@
       [(null? parts) '()]
       [(command? (first parts)) (%tokenize-command expr)]
       [(io? (first parts)) parts]
-      [(selection? (first parts)) (%tokenize-selection parts)]
-      [(iterative? (first parts)) (%tokenize-iterative parts)]
+      [(selection? (first parts)) (%tokenize-selection expr)]
+      [(iterative? (first parts)) (%tokenize-iterative expr)]
       [(booleaneval? expr) (%tokenize-boolean-eval expr)]
       [(assignment? expr) (%tokenize-assignment expr)]
       [else (%tokenize (string->list expr))])))
@@ -18,10 +18,10 @@
 (define (%tokenize-command expr)
   (let ((command (first (string-split expr))))
     (case command
-      (("#definefunc") (%tokenize-definefunc expr))
+      (("#definefunc") (%tokenize-multiline expr))
       (else (string-split expr)))))
 
-(define (%tokenize-definefunc expr)
+(define (%tokenize-multiline expr)
   (let ((lines (string-split expr "\r")))
     (append '() (map (lambda (line) (string-split line)) lines))))
 
@@ -33,8 +33,8 @@
   (let ((e (string-split expr #rx"=")))
     (list (first e) (first (assignment? expr)) (second e))))
     
-(define (%tokenize-selection parts) "tokenize seletion")
-(define (%tokenize-iterative parts) "tokenize iterative")
+(define (%tokenize-selection parts) (%tokenize-multiline parts))
+(define (%tokenize-iterative parts) (%tokenize-multiline parts))
 
 (define (%tokenize parts)
     (cond ((null? parts) '())

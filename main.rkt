@@ -10,7 +10,7 @@
 
 (define (togglemode expr)
   (if (not (null? (string-split expr)))
-      (if (member (car (string-split expr)) '("#definefunc"))
+      (if (member (car (string-split expr)) '("#definefunc" "if" "endif" "for" "endfor"))
           (modeswitch)
           expr) expr))
 
