@@ -8,7 +8,7 @@
 
 ; receives '("output" "a")
 (define (handle-io-output expr) (number? (getVarValue variables (car (string->list (car expr)))))
-                                    (string-append "The result is " (number->string (getVarValue variables (car (string->list (cadr expr)))))))
+                                    (string-append (string-append "The result is " (number->string (getVarValue variables (car (string->list (cadr expr)))))) ". "))
 
 ; receives '("input" "a")
 (define (handle-io-input expr) (setVarValue variables (string-ref (cadr expr) 0) (read)))
