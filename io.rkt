@@ -11,6 +11,6 @@
                                     (string-append "The result is " (number->string (getVarValue variables (car (string->list (cadr expr)))))))
 
 ; receives '("input" "a")
-(define (handle-io-input expr) "handle-io-input needs to be rewritten")
+(define (handle-io-input expr) (setVarValue variables (string-ref (cadr expr) 0) (read)))
 
-(handle-io-output '("output" "I"))
+(handle-io-input '("input" "I"))
