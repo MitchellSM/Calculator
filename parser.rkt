@@ -69,7 +69,14 @@
 (define (handle-assignment expr)
   (setVarValue variables (car (string->list (car expr)))  (parse (caddr expr))))
 
-(define (handleselection expr) expr)
+(define (handleselection expr)
+  (if (pair? (member (list "else") expr))
+      ; else 
+      (if (handle-boolean-eval (list (list-ref (car expr) 1) (list-ref (car expr) 2) (list-ref (car expr) 3)))
+          (parse (string-join (list-ref expr 1)))
+          (parse (string-join (list-ref expr 3))))
+      ; no else 
+      (and (handle-boolean-eval (list (list-ref (car expr) 1) (list-ref (car expr) 2) (list-ref (car expr) 3))) (parse (string-join (list-ref expr 1))))))
 
 (define (handleiterative expr) expr)
 
