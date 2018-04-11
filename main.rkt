@@ -9,9 +9,10 @@
       (set! multimode #t)))
 
 (define (togglemode expr)
-  (if (member (car (string-split expr)) '("#definefunc"))
-      (modeswitch)
-      expr))
+  (if (not (null? (string-split expr)))
+      (if (member (car (string-split expr)) '("#definefunc"))
+          (modeswitch)
+          expr) expr))
 
 ;; This is the internal version of the REPL, called with ease
 ;; by the UofL function
