@@ -78,6 +78,16 @@
       ; no else 
       (and (handle-boolean-eval (list (list-ref (car expr) 1) (list-ref (car expr) 2) (list-ref (car expr) 3))) (parse (string-join (list-ref expr 1))))))
 
-(define (handleiterative expr) expr)
+(define (handleiterative expr)
+  (setVarValue variables (car (string->list (list-ref (car expr) 1)))  (parse (list-ref (car expr) 3)))
+  (for (car (string->list (list-ref (car expr) 1))) (parse (list-ref (car expr) 5)) (parse (list-ref (car expr) 7)) (map (lambda (line) (and (not (string=? (car line) "endfor")) (string-join line))) (cdr expr))))
 
+
+(define (for counter end stepsize body)
+  (if (<= (getVarValue variables counter) end)
+      (begin (for-each (lambda (line) (and (not (eq? line #f)) (display (parse line)))) body)
+       (setVarValue variables counter (+ (getVarValue variables counter) stepsize))
+       (for counter end stepsize body))
+      "end"
+      ))
 
