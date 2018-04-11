@@ -30,7 +30,11 @@
 (define (handle tokens)
   (let ([f (first tokens)])
     ; special handling for functions.
-    (if (pair? f) (handle-define-function tokens)
+    (if (pair? f)
+        (case (car f)
+          [("if") (handleselection tokens)]
+          [("for") (handleiterative tokens)]
+          [else handle-define-function tokens])
         (case f
           ; tokens = ("#definevari" "varname" "vartype")
           [("#definevari") (handle-define-vari tokens)]
@@ -42,8 +46,7 @@
           [("input") (handle-io-input tokens)]
           ; tokens = ("output" "varname")
           [("output") (handle-io-output tokens)]
-          [("if") (handleselection tokens)]
-          [("for") (handleiterative tokens)]
+          
           ; tokens = ("main")
           [("main") (handle-main)]
           ; tokens = list of single characters representing equation
@@ -69,3 +72,5 @@
 (define (handleselection expr) expr)
 
 (define (handleiterative expr) expr)
+
+
