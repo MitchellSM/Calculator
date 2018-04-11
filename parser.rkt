@@ -70,17 +70,27 @@
   (setVarValue variables (car (string->list (car expr)))  (parse (caddr expr))))
 
 (define (handleselection expr)
-  (if (pair? (member (list "else") expr))
+  (cond
+      ; else if
+      [(pair? (member "elseif" (list-ref expr 2))) (or
+                                               (and (handle-boolean-eval (list (list-ref (car expr) 1) (list-ref (car expr) 2) (list-ref (car expr) 3))) (parse (string-join (list-ref expr 1))))
+                                               (and (handle-boolean-eval
+                                                 (list (list-ref (list-ref expr 2) 1)
+                                                       (list-ref (list-ref expr 2) 2)
+                                                       (list-ref (list-ref expr 2) 3)))  (parse (string-join (list-ref expr 3)))))]
       ; else 
-      (if (handle-boolean-eval (list (list-ref (car expr) 1) (list-ref (car expr) 2) (list-ref (car expr) 3)))
+      [(pair? (member (list "else") expr)) (if (handle-boolean-eval (list (list-ref (car expr) 1) (list-ref (car expr) 2) (list-ref (car expr) 3)))
           (parse (string-join (list-ref expr 1)))
-          (parse (string-join (list-ref expr 3))))
+          (parse (string-join (list-ref expr 3))))]
       ; no else 
-      (and (handle-boolean-eval (list (list-ref (car expr) 1) (list-ref (car expr) 2) (list-ref (car expr) 3))) (parse (string-join (list-ref expr 1))))))
+      [else (and (handle-boolean-eval (list (list-ref (car expr) 1) (list-ref (car expr) 2) (list-ref (car expr) 3))) (parse (string-join (list-ref expr 1))))]))
 
 (define (handleiterative expr)
   (setVarValue variables (car (string->list (list-ref (car expr) 1)))  (parse (list-ref (car expr) 3)))
-  (for (car (string->list (list-ref (car expr) 1))) (parse (list-ref (car expr) 5)) (parse (list-ref (car expr) 7)) (map (lambda (line) (and (not (string=? (car line) "endfor")) (string-join line))) (cdr expr))))
+  (for (car (string->list (list-ref (car expr) 1)))
+    (parse (list-ref (car expr) 5))
+    (parse (list-ref (car expr) 7))
+    (map (lambda (line) (and (not (string=? (car line) "endfor")) (string-join line))) (cdr expr))))
 
 
 (define (for counter end stepsize body)
