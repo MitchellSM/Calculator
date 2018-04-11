@@ -12,5 +12,3 @@
 
 ; receives '("input" "a")
 (define (handle-io-input expr) (setVarValue variables (string-ref (cadr expr) 0) (read)))
-
-(handle-io-input '("input" "I"))
