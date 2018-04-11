@@ -7,7 +7,10 @@
 
 
 ; receives '("output" "a")
-(define (handle-io-output expr) "handle-io-output needs to be rewritten")
+(define (handle-io-output expr) (number? (getVarValue variables (car (string->list (car expr)))))
+                                    (string-append "The result is " (number->string (getVarValue variables (car (string->list (cadr expr)))))))
 
 ; receives '("input" "a")
 (define (handle-io-input expr) "handle-io-input needs to be rewritten")
+
+(handle-io-output '("output" "I"))
