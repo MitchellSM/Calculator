@@ -7,8 +7,11 @@
 (provide function?)
 (provide execute)
 (provide functions)
-
-(define (handle-main tokens)"Do something here")
+    
+(define (handle-main tokens)
+  (begin
+    (execute "testFunc1" (1 2))
+    (execute "testFunc2" ((+1 2) 3))))
 
 (define functions (mlist (mlist "testFunc1" '("a" "b") '(("a=b+2")("b=a*2"))) (mlist "testFunc2" '("c" "d") '(("c=d*3")("d=c-5")))))
 
@@ -76,5 +79,5 @@
     (if (null? funcs)
         #f
         (if (equal? (mcar (mcar funcs)) name)
-            #t
+            name
             (function? (mcdr funcs) name)))))

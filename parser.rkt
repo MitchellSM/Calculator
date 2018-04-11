@@ -51,8 +51,12 @@
           ; tokens = ("main")
           [("main") (handle-main)]
           ; tokens = list of single characters representing equation
-          [else (evalPostFix(shunting-yard (replaceVars tokens)))]))))
-;(if (function? functions (first tokens)) (execute (first tokens) (cdr tokens))
+          [else (if (function? functions (first tokens))
+                    (execute (first tokens) (cdr tokens))
+                    (evalPostFix(shunting-yard (replaceVars tokens))))]))))
+
+
+
 ; gets ("expr" "operator" "expr")
 (define (handle-boolean-eval expr)
   (let ([l (parse (first expr))]
