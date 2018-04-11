@@ -11,8 +11,8 @@
   "Variable added"
 )
 
-(define (handle-exit tokens) "define the handle-exit handler here")
-(define (handle-clear tokens) "define the handle-clear handler here")
+(define (handle-exit tokens) (exit))
+(define (handle-clear tokens) (clearVariables))
 
 (define (handle-define-function tokens) "mitch work here")
 
