@@ -16,6 +16,7 @@
     [(#\-) (- l r)]
     [(#\/) (/ l r)]
     [(#\*) (* l r)]
+    [(#\^) (expt l r)]
     [(#\!) (factorial r)]))
 
 (define (factorial n)
