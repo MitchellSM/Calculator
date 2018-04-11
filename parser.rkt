@@ -59,7 +59,8 @@
       (("<") (< l r)))))
 
 ; gets '("1" "=" "2")
-(define (handle-assignment expr) expr)
+(define (handle-assignment expr)
+  (setVarValue variables (car (string->list (car expr)))  (parse (caddr expr))))
 
 (define (handleselection expr) expr)
 
