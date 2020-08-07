@@ -1,4 +1,4 @@
-# uofl-scheme-calculator
+# Scheme-calculator
 
 ## Description:
 This is an infix programmable calculated implemented using racket.
